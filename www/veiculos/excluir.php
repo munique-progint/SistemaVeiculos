@@ -5,7 +5,7 @@ include("../includes/conexao.php");
 
 $id = $_GET["id"];
 
-$sql = "DELETE FROM marcas
+$sql = "DELETE FROM veiculos
         WHERE id='$id'";
 
 mysqli_query($conexao, $sql);

@@ -2,7 +2,7 @@
 
 session_start();
 
-include("includes/conexao.php");
+require_once("includes/conexao.php");
 
 if (isset($_POST["usuario"]) && isset($_POST["senha"])) {
 
@@ -21,13 +21,10 @@ if (isset($_POST["usuario"]) && isset($_POST["senha"])) {
 
         header("Location: index.php");
         exit();
-
     } else {
 
         $erro = "Usuário ou senha inválidos.";
-
     }
-
 }
 
 ?>
@@ -38,35 +35,113 @@ if (isset($_POST["usuario"]) && isset($_POST["senha"])) {
 <head>
 
     <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Login</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/estilo.css">
 
 </head>
 
-<body>
+<body class="bg-light">
 
-<h2>Login</h2>
+    <div class="container">
 
-<?php
+        <div class="row justify-content-center align-items-center vh-100">
 
-if (isset($erro)) {
-    echo "<p>$erro</p>";
-}
+            <div class="col-md-6 col-lg-5">
 
-?>
+                <div class="card shadow">
 
-<form method="POST">
+                    <div class="card-header bg-primary text-white text-center">
 
-    <label>Usuário</label><br>
-    <input type="text" name="usuario"><br><br>
+                        <h3 class="mb-1">Gerenciamento de Veículos</h3>
 
-    <label>Senha</label><br>
-    <input type="password" name="senha"><br><br>
+                        <small class="text-white">
+                            Faça login para acessar o sistema
+                        </small>
 
-    <button type="submit">
-        Entrar
-    </button>
+                    </div>
 
-</form>
+                    <div class="card-body">
+
+                        <?php
+
+                        if (isset($erro)) {
+
+                        ?>
+
+                            <div class="alert alert-danger">
+
+                                <?php echo $erro; ?>
+
+                            </div>
+
+                        <?php
+
+                        }
+
+                        ?>
+
+                        <form method="POST">
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Usuário
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="usuario"
+                                    class="form-control"
+                                    required>
+
+                            </div>
+
+                            <div class="mb-4">
+
+                                <label class="form-label">
+                                    Senha
+                                </label>
+
+                                <input
+                                    type="password"
+                                    name="senha"
+                                    class="form-control"
+                                    required>
+
+                            </div>
+
+                            <div class="d-grid">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary">
+
+                                    Entrar
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

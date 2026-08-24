@@ -38,3 +38,10 @@ VALUES
 ('Hyundai'),
 ('Toyota'),
 ('Volkswagen');
+
+INSERT INTO veiculos (modelo, id_marca, potencia, ano_fabricacao, tipo)
+VALUES
+('Onix', 1, '116 cv', 2023, 'Carro'),
+('Corolla', 6, '177 cv', 2022, 'Carro'),
+('CG 160', 4, '15 cv', 2024, 'Moto'),
+('Delivery 11.180', 7, '175 cv', 2021, 'Caminhão');

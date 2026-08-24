@@ -5,7 +5,10 @@ include("../includes/conexao.php");
 
 $caminho = "../";
 
-$sql = "SELECT * FROM marcas";
+$sql = "SELECT veiculos.*, marcas.marca
+        FROM veiculos
+        INNER JOIN marcas
+        ON veiculos.id_marca = marcas.id";
 
 $resultado = mysqli_query($conexao, $sql);
 
@@ -20,7 +23,7 @@ $resultado = mysqli_query($conexao, $sql);
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Marcas</title>
+    <title>Veículos</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -38,10 +41,10 @@ $resultado = mysqli_query($conexao, $sql);
 
             <div class="card-header d-flex justify-content-between align-items-center">
 
-                <h3 class="mb-0">Marcas</h3>
+                <h3 class="mb-0">Veículos</h3>
 
                 <a href="cadastrar.php" class="btn btn-primary">
-                    Nova Marca
+                    Novo Veículo
                 </a>
 
             </div>
@@ -55,9 +58,11 @@ $resultado = mysqli_query($conexao, $sql);
                         <tr>
 
                             <th>ID</th>
-
+                            <th>Modelo</th>
                             <th>Marca</th>
-
+                            <th>Potência</th>
+                            <th>Ano</th>
+                            <th>Tipo</th>
                             <th width="180">Ações</th>
 
                         </tr>
@@ -66,17 +71,21 @@ $resultado = mysqli_query($conexao, $sql);
 
                     <tbody>
 
-                        <?php
-
-                        while ($linha = mysqli_fetch_array($resultado)) {
-
-                        ?>
+                        <?php while ($linha = mysqli_fetch_assoc($resultado)) { ?>
 
                             <tr>
 
                                 <td><?php echo $linha["id"]; ?></td>
 
+                                <td><?php echo $linha["modelo"]; ?></td>
+
                                 <td><?php echo $linha["marca"]; ?></td>
+
+                                <td><?php echo $linha["potencia"]; ?></td>
+
+                                <td><?php echo $linha["ano_fabricacao"]; ?></td>
+
+                                <td><?php echo $linha["tipo"]; ?></td>
 
                                 <td>
 
@@ -85,7 +94,7 @@ $resultado = mysqli_query($conexao, $sql);
                                     </a>
 
                                     <a href="excluir.php?id=<?php echo $linha["id"]; ?>" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Deseja realmente excluir esta marca?');">
+                                        onclick="return confirm('Deseja realmente excluir este veículo?');">
                                         Excluir
                                     </a>
 
@@ -93,11 +102,7 @@ $resultado = mysqli_query($conexao, $sql);
 
                             </tr>
 
-                        <?php
-
-                        }
-
-                        ?>
+                        <?php } ?>
 
                     </tbody>
 

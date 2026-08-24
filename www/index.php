@@ -1,6 +1,8 @@
 <?php
 
-include("includes/verifica_login.php");
+require_once("includes/verifica_login.php");
+
+$caminho = "";
 
 ?>
 
@@ -9,16 +11,50 @@ include("includes/verifica_login.php");
 
 <head>
     <meta charset="UTF-8">
-    <title>Sistema de Veículos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gerenciamento de Veículos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilo.css">
 </head>
 
-<body>
+<body class="bg-light">
 
-<h1>Sistema de Gerenciamento de Veículos</h1>
+        <?php include("includes/menu.php"); ?>
 
-<p>Login realizado com sucesso.</p>
+        <div class="container mt-5">
 
-<a href="logout.php">Sair</a>
+            <div class="card shadow">
 
-</body>
+                <div class="card-header">
+                    <h3 class="mb-0">Menu Principal</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <p class="lead">
+                        Bem-vindo,
+                        <strong><?php echo $_SESSION["usuario"]; ?></strong>!
+                    </p>
+
+                    <div class="d-grid gap-3">
+
+                        <a href="marcas/listar.php" class="btn btn-primary btn-lg">
+                            Gerenciar Marcas
+                        </a>
+
+                        <a href="veiculos/listar.php" class="btn btn-success btn-lg">
+                            Gerenciar Veículos
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </body>
+
 </html>

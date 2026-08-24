@@ -3,20 +3,32 @@
 include("../includes/verifica_login.php");
 include("../includes/conexao.php");
 
+$caminho = "../";
+
 $id = $_GET["id"];
 
 if (isset($_POST["marca"])) {
 
     $marca = $_POST["marca"];
+    $erros = [];
+
+if (empty($marca))
+    $erros[] = "Preencha a marca";
 
     $sql = "UPDATE marcas
             SET marca='$marca'
             WHERE id='$id'";
 
-    mysqli_query($conexao, $sql);
+    if (mysqli_query($conexao, $sql)) {
 
     header("Location: listar.php");
     exit();
+
+} else {
+
+    echo "Houve um erro ao editar a marca.";
+
+}
 }
 
 $sql = "SELECT * FROM marcas
@@ -29,50 +41,71 @@ $linha = mysqli_fetch_assoc($resultado);
 ?>
 
 <!DOCTYPE html>
-
 <html lang="pt-br">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Editar Marca</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Marca</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/estilo.css">
 
 </head>
 
-<body>
+<body class="bg-light">
 
-<h2>Editar Marca</h2>
+    <?php include("../includes/menu.php"); ?>
 
-<form method="post">
+    <div class="container mt-4">
 
-<label>Marca</label>
+        <div class="card shadow">
 
-<br>
+            <div class="card-header">
 
-<input
-type="text"
-name="marca"
-value="<?php echo $linha["marca"]; ?>"
-required>
+                <h3 class="mb-0">Editar Marca</h3>
 
-<br><br>
+            </div>
 
-<button type="submit">
+            <div class="card-body">
 
-Salvar
+                <form method="post">
 
-</button>
+                    <div class="mb-3">
 
-</form>
+                        <label class="form-label">Marca</label>
 
-<br>
+                        <input
+                            type="text"
+                            name="marca"
+                            class="form-control"
+                            value="<?php echo $linha["marca"]; ?>"
+                            required
+                            autofocus>
 
-<a href="listar.php">
+                    </div>
 
-Voltar
+                    <button type="submit" class="btn btn-primary">
+                        Salvar
+                    </button>
 
-</a>
+                    <a href="listar.php" class="btn btn-secondary">
+                        Voltar
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

@@ -3,50 +3,108 @@
 include("../includes/verifica_login.php");
 include("../includes/conexao.php");
 
-if (isset($_POST["marca"])) {
+$caminho = "../";
+
+  if (isset($_POST["marca"])) {
 
     $marca = $_POST["marca"];
 
-    $sql = "INSERT INTO marcas (marca)
-            VALUES ('$marca')";
+    $erros = [];
 
-    mysqli_query($conexao, $sql);
+    if (empty($marca))
+        $erros[] = "Preencha a marca";
 
-    header("Location: listar.php");
-    exit();
+    if (count($erros) == 0) {
+
+        $sql = "INSERT INTO marcas (marca)
+                VALUES ('$marca')";
+
+        if (mysqli_query($conexao, $sql)) {
+
+            header("Location: listar.php");
+            exit();
+
+        } else {
+
+            echo "Houve um erro ao cadastrar a marca.";
+
+        }
+
+    } else {
+
+        foreach ($erros as $erro) {
+
+            echo "$erro<br>";
+
+        }
+
+    }
+
 }
-
-?>
-
-<!DOCTYPE html>
-<html lang="pt-br">
+    ?>
 
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Cadastrar Marca</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/estilo.css">
+
 </head>
 
-<body>
+<body class="bg-light">
 
-    <h2>Cadastrar Marca</h2>
+    <?php include("../includes/menu.php"); ?>
 
-    <form method="post">
+    <div class="container mt-4">
 
-        <label>Marca</label><br>
+        <div class="card shadow">
 
-        <input type="text" name="marca" required>
+            <div class="card-header">
 
-        <br><br>
+                <h3 class="mb-0">Cadastrar Marca</h3>
 
-        <button type="submit">
-            Cadastrar
-        </button>
+            </div>
 
-    </form>
+            <div class="card-body">
 
-    <br>
+                <form method="post">
 
-    <a href="listar.php">Voltar</a>
+                    <div class="mb-3">
+
+                        <label class="form-label">Marca</label>
+
+                        <input
+                            type="text"
+                            name="marca"
+                            class="form-control"
+                            required
+                            autofocus>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Cadastrar
+                    </button>
+
+                    <a href="listar.php" class="btn btn-secondary">
+                        Voltar
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
