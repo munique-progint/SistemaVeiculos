@@ -22,10 +22,16 @@ if (isset($_POST["modelo"])) {
             VALUES
             ('$modelo', '$id_marca', '$potencia', '$ano_fabricacao', '$tipo')";
 
-    mysqli_query($conexao, $sql);
 
-    header("Location: listar.php");
-    exit();
+    if (mysqli_query($conexao, $sql)) {
+
+        header("Location: listar.php");
+        exit();
+
+    } else {
+        echo "Houve um erro ao cadastrar o veículo.";
+    }
+
 }
 
 ?>
@@ -36,13 +42,9 @@ if (isset($_POST["modelo"])) {
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Cadastrar Veículo</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="../css/estilo.css">
 
 </head>
@@ -50,11 +52,8 @@ if (isset($_POST["modelo"])) {
 <body class="bg-light">
 
     <?php include("../includes/menu.php"); ?>
-
     <div class="container mt-4">
-
         <div class="card shadow">
-
             <div class="card-header">
 
                 <h3 class="mb-0">Cadastrar Veículo</h3>
@@ -62,9 +61,7 @@ if (isset($_POST["modelo"])) {
             </div>
 
             <div class="card-body">
-
                 <form method="post">
-
                     <div class="mb-3">
 
                         <label class="form-label">Modelo</label>
@@ -77,15 +74,12 @@ if (isset($_POST["modelo"])) {
                             autofocus>
 
                     </div>
-
                     <div class="mb-3">
 
                         <label class="form-label">Marca</label>
-
                         <select name="id_marca" class="form-select" required>
 
-                            <?php while ($linha = mysqli_fetch_assoc($resultado)) { ?>
-
+                            <?php while ($linha = mysqli_fetch_array($resultado)) { ?>
                                 <option value="<?php echo $linha["id"]; ?>">
                                     <?php echo $linha["marca"]; ?>
                                 </option>
@@ -93,11 +87,10 @@ if (isset($_POST["modelo"])) {
                             <?php } ?>
 
                         </select>
-
                     </div>
 
-                    <div class="mb-3">
 
+                    <div class="mb-3">
                         <label class="form-label">Potência</label>
 
                         <input
@@ -111,7 +104,6 @@ if (isset($_POST["modelo"])) {
                     <div class="mb-3">
 
                         <label class="form-label">Ano de Fabricação</label>
-
                         <input
                             type="number"
                             name="ano_fabricacao"
@@ -119,7 +111,6 @@ if (isset($_POST["modelo"])) {
                             required>
 
                     </div>
-
                     <div class="mb-4">
 
                         <label class="form-label d-block">Tipo</label>
@@ -136,8 +127,8 @@ if (isset($_POST["modelo"])) {
                             <label class="form-check-label">
                                 Carro
                             </label>
-
                         </div>
+
 
                         <div class="form-check form-check-inline">
 
@@ -150,9 +141,7 @@ if (isset($_POST["modelo"])) {
                             <label class="form-check-label">
                                 Moto
                             </label>
-
                         </div>
-
                         <div class="form-check form-check-inline">
 
                             <input
@@ -164,9 +153,7 @@ if (isset($_POST["modelo"])) {
                             <label class="form-check-label">
                                 Caminhão
                             </label>
-
                         </div>
-
                     </div>
 
                     <button type="submit" class="btn btn-primary">
@@ -178,11 +165,8 @@ if (isset($_POST["modelo"])) {
                     </a>
 
                 </form>
-
             </div>
-
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

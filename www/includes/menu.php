@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
     <div class="container">
-
         <a class="navbar-brand" href="<?= $caminho ?>index.php">
             Gerenciamento de Veículos
         </a>
@@ -11,9 +10,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="menu">
-
             <ul class="navbar-nav ms-auto">
-
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $caminho ?>index.php">
                         Início
@@ -37,11 +34,7 @@
                         Sair
                     </a>
                 </li>
-
             </ul>
-
         </div>
-
     </div>
-
 </nav>

@@ -2,13 +2,10 @@
 
 include("../includes/verifica_login.php");
 include("../includes/conexao.php");
-
 $caminho = "../";
-
 $id = $_GET["id"];
 
 if (isset($_POST["modelo"])) {
-
     $modelo = $_POST["modelo"];
     $id_marca = $_POST["id_marca"];
     $potencia = $_POST["potencia"];
@@ -23,19 +20,23 @@ if (isset($_POST["modelo"])) {
                 tipo='$tipo'
             WHERE id='$id'";
 
-    mysqli_query($conexao, $sql);
+    if (mysqli_query($conexao, $sql)) {
 
-    header("Location: listar.php");
-    exit();
+        header("Location: listar.php");
+        exit();
+
+    } else {
+        echo "Houve um erro ao editar o veículo.";
+    }
+
 }
 
 $sql = "SELECT * FROM veiculos WHERE id='$id'";
 $resultado = mysqli_query($conexao, $sql);
-$veiculo = mysqli_fetch_assoc($resultado);
+$veiculo = mysqli_fetch_array($resultado);
 
 $sql = "SELECT * FROM marcas";
 $resultado_marcas = mysqli_query($conexao, $sql);
-
 ?>
 
 <!DOCTYPE html>
@@ -44,39 +45,28 @@ $resultado_marcas = mysqli_query($conexao, $sql);
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Editar Veículo</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="../css/estilo.css">
 
 </head>
 
 <body class="bg-light">
-
     <?php include("../includes/menu.php"); ?>
 
     <div class="container mt-4">
-
         <div class="card shadow">
-
             <div class="card-header">
-
                 <h3 class="mb-0">Editar Veículo</h3>
-
             </div>
 
             <div class="card-body">
-
                 <form method="post">
 
                     <div class="mb-3">
 
                         <label class="form-label">Modelo</label>
-
                         <input
                             type="text"
                             name="modelo"
@@ -89,42 +79,35 @@ $resultado_marcas = mysqli_query($conexao, $sql);
                     <div class="mb-3">
 
                         <label class="form-label">Marca</label>
-
                         <select name="id_marca" class="form-select" required>
 
-                            <?php while ($marca = mysqli_fetch_assoc($resultado_marcas)) { ?>
+                            <?php while ($marca = mysqli_fetch_array($resultado_marcas)) { ?>
 
                                 <option
                                     value="<?php echo $marca["id"]; ?>"
                                     <?php if ($marca["id"] == $veiculo["id_marca"]) echo "selected"; ?>>
-
                                     <?php echo $marca["marca"]; ?>
-
                                 </option>
 
-                            <?php } ?>
 
+                            <?php } ?>
                         </select>
 
                     </div>
-
                     <div class="mb-3">
 
                         <label class="form-label">Potência</label>
-
                         <input
                             type="text"
                             name="potencia"
                             class="form-control"
                             value="<?php echo $veiculo["potencia"]; ?>"
                             required>
-
                     </div>
 
                     <div class="mb-3">
 
                         <label class="form-label">Ano de Fabricação</label>
-
                         <input
                             type="number"
                             name="ano_fabricacao"
@@ -133,7 +116,6 @@ $resultado_marcas = mysqli_query($conexao, $sql);
                             required>
 
                     </div>
-
                     <div class="mb-4">
 
                         <label class="form-label d-block">Tipo</label>
@@ -150,24 +132,21 @@ $resultado_marcas = mysqli_query($conexao, $sql);
                             <label class="form-check-label">
                                 Carro
                             </label>
-
                         </div>
 
-                        <div class="form-check form-check-inline">
 
+                        <div class="form-check form-check-inline">
                             <input
                                 class="form-check-input"
                                 type="radio"
                                 name="tipo"
                                 value="Moto"
                                 <?php if ($veiculo["tipo"] == "Moto") echo "checked"; ?>>
-
                             <label class="form-check-label">
                                 Moto
                             </label>
 
                         </div>
-
                         <div class="form-check form-check-inline">
 
                             <input
@@ -180,9 +159,7 @@ $resultado_marcas = mysqli_query($conexao, $sql);
                             <label class="form-check-label">
                                 Caminhão
                             </label>
-
                         </div>
-
                     </div>
 
                     <button type="submit" class="btn btn-primary">
@@ -194,15 +171,11 @@ $resultado_marcas = mysqli_query($conexao, $sql);
                     </a>
 
                 </form>
-
             </div>
-
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
 </html>
